@@ -1,0 +1,27 @@
+# Ignore build output
+/bin/
+/obj/
+
+# Ignore NuGet packages
+/packages/
+
+# Ignore Visual Studio files
+.vs/
+*.suo
+*.user
+*.userprefs
+*.vscode
+
+# Ignore build artifacts
+*.dll
+*.pdb
+*.exe
+*.cache
+*.log
+*.bak
+
+# Ignore node_modules folder
+node_modules/
+
+# Ignore publish output
+/wwwroot/dist/

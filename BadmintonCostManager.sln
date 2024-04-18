@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9142A55C-0A3A-43E8-AF44-EFA9157F374A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CostManager.Pwa", "src\CostManager.Pwa\CostManager.Pwa.csproj", "{6013D9E7-C30A-4D9C-9C8A-B02D104AD6A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CostManager.Pwa", "CostManager.Pwa\CostManager.Pwa.csproj", "{6013D9E7-C30A-4D9C-9C8A-B02D104AD6A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,112 @@
+@page "/field/new"
+@page "/field/{FieldId:int}"
+@using CostManager.Pwa.Models
+@using CostManager.Pwa.Services
+@using Microsoft.AspNetCore.Components.Forms
+@inject HttpClient Http
+
+<h3>Field Management</h3>
+
+
+@if (NewField == null)
+{
+    <p>Loading field...</p>
+}
+else
+{
+    <EditForm Model="@NewField" OnValidSubmit="SaveField">
+        <div class="form-group mb-2">
+            <label for="fieldName">Name:</label>
+            <InputText class="form-control" id="fieldName" placeholder="Enter field name" @bind-Value="@NewField.Name">
+            </InputText>
+        </div>
+        <div class="form-group mb-2">
+            <label for="fieldLocation">Location:</label>
+            <InputText class="form-control" id="fieldLocation" placeholder="Enter field location"
+                @bind-Value="@NewField.Location"></InputText>
+        </div>
+        <div class="form-group mb-2">
+            <label for="fieldCost">Cost Per Hour:</label>
+            <InputNumber class="form-control" id="fieldCost" placeholder="Enter cost per hour"
+                @bind-Value="@NewField.CostPerHour"></InputNumber>
+        </div>
+        <div class="form-group">
+            <label for="fieldDays">Day of Week</label>
+            <div class="btn-group flex-wrap" role="group">
+                @foreach (var day in new[] { ("Monday", "Mon"), ("Tuesday", "Tue"), ("Wednesday", "Wed"), ("Thursday",
+            "Thu"), ("Friday", "Fri"), ("Saturday", "Sat"), ("Sunday", "Sun") })
+                {
+                    var dayName = day.Item1;
+                    var dayAbbreviation = day.Item2;
+                    var isSelected = NewField.Days.Contains(dayName);
+                    var buttonClass = isSelected ? "btn-primary" : "btn-outline-primary";
+
+                    <button type="button" class="@buttonClass btn me-2 mb-2 rounded" @onclick="() => ToggleDay(dayName)">
+                        @dayAbbreviation
+                    </button>
+                }
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col">
+                <div class="form-group">
+                    <label for="numDays">No. of days</label>
+                    <label class="form-control" id="numDays">@NewField.Days.Count</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="timePerDay">Time per Day</label>
+                    <input type="text" class="form-control" id="timePerDay" @bind="NewField.TimePerDay">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Add Field</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int? FieldId { get; set; }
+
+    Field NewField;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (FieldId.HasValue)
+        {
+            NewField = await Http.GetFromJsonAsync<Field>($"api/Field/{FieldId.Value}");
+        }
+        else
+        {
+            NewField = new Field();
+        }
+    }
+
+    private async Task SaveField()
+    {
+        if (FieldId.HasValue)
+        {
+            await Http.PutAsJsonAsync($"api/Field/{FieldId.Value}", NewField);
+        }
+        else
+        {
+            await Http.PostAsJsonAsync("api/Field", NewField);
+            NewField = new Field();
+        }
+    }
+
+    private void ToggleDay(string dayName)
+    {
+        if (NewField.Days.Contains(dayName))
+        {
+            NewField.Days.Remove(dayName);
+        }
+        else
+        {
+            NewField.Days.Add(dayName);
+        }
+    }
+}

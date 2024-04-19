@@ -1,0 +1,9 @@
+.day-button {
+    width: 100%; /* Full width on small screens */
+}
+
+@media (min-width: 576px) { /* When the screen is 576px wide or wider, set the button width to 60px */
+    .day-button {
+        width: 60px;
+    }
+}

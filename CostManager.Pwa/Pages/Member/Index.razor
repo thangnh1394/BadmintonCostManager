@@ -1,0 +1,32 @@
+@page "/member"
+@using CostManager.Pwa.Models
+
+<h3>Member</h3>
+
+<EditForm Model="@member" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <InputText id="name" class="form-control" @bind-Value="@member.Name" />
+        <ValidationMessage For="@(() => member.Name)" />
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <InputText id="email" class="form-control" @bind-Value="@member.Email" />
+        <ValidationMessage For="@(() => member.Email)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</EditForm>
+
+@code {
+    private Member member = new Member();
+
+    private void HandleSubmit()
+    {
+        // Handle form submission here
+    }
+}
